@@ -1,11 +1,13 @@
 {
     "name": "codebuild-demo-project",
     "source": {
-        "type": "s3",
-        "location": "codebuild-us-east-1-611695165675-input-bucket/MessageUtil.zip"
+        // "type": "S3",
+        // "location": "codebuild-us-east-1-611695165675-input-bucket/MessageUtil.zip"
+        "type": "GITHUB",
+        "location": ""
     },
     "artifacts": {
-        "type": "s3",
+        "type": "S3",
         "location": "codebuild-us-east-1-611695165675-output-bucket"
     },
     "environment": {
