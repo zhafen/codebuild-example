@@ -9,7 +9,7 @@ Resources:
         Type: LINUX_CONTAINER
         Image: aws/codebuild/standard:5.0
         ComputeType: BUILD_GENERAL1_SMALL
-      ServiceRole: !Ref CodeBuildServiceRole
+      ServiceRole: !GetAtt CodeBuildServiceRole.Arn
       Source: 
         Location: https://github.com/zhafen/codebuild-example.git
         Type: GITHUB
@@ -25,47 +25,37 @@ Resources:
             - codebuild.amazonaws.com
           Action:
           - sts:AssumeRole
-        - Sid: CloudWatchLogsPolicy
-          Effect: Allow
-          Principal:
-            Service:
-            - codebuild.amazonaws.com
-          Action:
-          - logs:CreateLogGroup
-          - logs:CreateLogStream
-          - logs:PutLogEvents
-          Resource: "*"
-        - Sid: CodeCommitPolicy
-          Effect: Allow
-          Principal:
-            Service:
-            - codebuild.amazonaws.com
-          Action:
-          - codecommit:GitPull
-          Resource: "*"
-        - Sid: S3GetObjectPolicy
-          Effect: Allow
-          Principal:
-            Service:
-            - codebuild.amazonaws.com
-          Action:
-          - s3:GetObject
-          - s3:GetObjectVersion
-          Resource: "*"
-        - Sid: S3PutObjectPolicy
-          Effect: Allow
-          Principal:
-            Service:
-            - codebuild.amazonaws.com
-          Action:
-          - s3:PutObject
-          Resource: "*"
-        - Sid: S3BucketIdentity
-          Effect: Allow
-          Principal:
-            Service:
-            - codebuild.amazonaws.com
-          Action:
-          - s3:GetBucketAcl
-          - s3:GetBucketLocation
-          Resource: "*"
+      Path: /
+      Policies:
+        - PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: CloudWatchLogsPolicy
+                Effect: Allow
+                Action:
+                - logs:CreateLogGroup
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+                Resource: "*"
+              - Sid: CodeCommitPolicy
+                Effect: Allow
+                Action:
+                - codecommit:GitPull
+                Resource: "*"
+              - Sid: S3GetObjectPolicy
+                Effect: Allow
+                Action:
+                - s3:GetObject
+                - s3:GetObjectVersion
+                Resource: "*"
+              - Sid: S3PutObjectPolicy
+                Effect: Allow
+                Action:
+                - s3:PutObject
+                Resource: "*"
+              - Sid: S3BucketIdentity
+                Effect: Allow
+                Action:
+                - s3:GetBucketAcl
+                - s3:GetBucketLocation
+                Resource: "*"
