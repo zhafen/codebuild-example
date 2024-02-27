@@ -9,7 +9,7 @@ Resources:
         Type: LINUX_CONTAINER
         Image: aws/codebuild/standard:5.0
         ComputeType: BUILD_GENERAL1_SMALL
-      ServiceRole: !GetAtt CodeBuildServiceRole.Arn
+      ServiceRole: !Ref CodeBuildServiceRole
       Source: 
         Location: https://github.com/zhafen/codebuild-example.git
         Type: GITHUB
