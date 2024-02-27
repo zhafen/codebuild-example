@@ -27,25 +27,45 @@ Resources:
           - sts:AssumeRole
         - Sid: CloudWatchLogsPolicy
           Effect: Allow
+          Principal:
+            Service:
+            - codebuild.amazonaws.com
           Action:
           - logs:CreateLogGroup
           - logs:CreateLogStream
           - logs:PutLogEvents
+          Resource: "*"
         - Sid: CodeCommitPolicy
           Effect: Allow
+          Principal:
+            Service:
+            - codebuild.amazonaws.com
           Action:
           - codecommit:GitPull
+          Resource: "*"
         - Sid: S3GetObjectPolicy
           Effect: Allow
+          Principal:
+            Service:
+            - codebuild.amazonaws.com
           Action:
           - s3:GetObject
           - s3:GetObjectVersion
+          Resource: "*"
         - Sid: S3PutObjectPolicy
           Effect: Allow
+          Principal:
+            Service:
+            - codebuild.amazonaws.com
           Action:
           - s3:PutObject
+          Resource: "*"
         - Sid: S3BucketIdentity
           Effect: Allow
+          Principal:
+            Service:
+            - codebuild.amazonaws.com
           Action:
           - s3:GetBucketAcl
           - s3:GetBucketLocation
+          Resource: "*"
