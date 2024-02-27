@@ -1,0 +1,27 @@
+Resources:
+  CodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts: 
+        Location: codebuild-us-east-1-611695165675-input-bucket
+        Type: S3
+      Environment: 
+        Type: LINUX_CONTAINER
+        Image: aws/codebuild/standard:5.0
+        ComputeType: BUILD_GENERAL1_SMALL
+      ServiceRole: !Ref CodeBuildServiceRole
+      Source: 
+        Location: https://github.com/zhafen/codebuild-example.git
+        Type: GITHUB
+  CodeBuildServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - codebuild.amazonaws.com
+          Action:
+          - sts:AssumeRole
