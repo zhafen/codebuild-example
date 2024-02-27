@@ -3,7 +3,7 @@ Resources:
     Type: AWS::CodeBuild::Project
     Properties:
       Artifacts: 
-        Location: codebuild-us-east-1-611695165675-input-bucket
+        Location: !Ref OutputBucket
         Type: S3
       Environment: 
         Type: LINUX_CONTAINER
@@ -60,3 +60,8 @@ Resources:
                 - s3:GetBucketAcl
                 - s3:GetBucketLocation
                 Resource: "*"
+  OutputBucket:
+    Type: 'AWS::S3::Bucket'
+    DeletionPolicy: RetainExceptOnCreate
+    Properties:
+      BucketName: codebuild-example-output-bucket
