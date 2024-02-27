@@ -9,7 +9,7 @@ Resources:
         Type: LINUX_CONTAINER
         Image: aws/codebuild/standard:5.0
         ComputeType: BUILD_GENERAL1_SMALL
-      ServiceRole: !Ref CodeBuildServiceRole
+      ServiceRole: !GetAtt CodeBuildServiceRole.Arn
       Source: 
         Location: https://github.com/zhafen/codebuild-example.git
         Type: GITHUB
@@ -27,7 +27,8 @@ Resources:
           - sts:AssumeRole
       Path: /
       Policies:
-        - PolicyDocument:
+        - PolicyName: CodeBuildRolePolicy
+          PolicyDocument:
             Version: '2012-10-17'
             Statement:
               - Sid: CloudWatchLogsPolicy
